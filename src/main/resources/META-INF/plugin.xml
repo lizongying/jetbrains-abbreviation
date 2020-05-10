@@ -1,0 +1,30 @@
+<idea-plugin>
+    <idea-version since-build="162"/>
+
+    <id>com.lizongying.abbreviation</id>
+    <name>abbreviation</name>
+    <vendor email="lizongying@msn.com" url="">lizongying</vendor>
+
+    <description><![CDATA[
+Help programmers who are not good at English spell out authentic English abbreviations.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceInterface="com.lizongying.abbreviation.toolWindow.AbbreviationFactory$ProjectService"
+                        serviceImplementation="com.lizongying.abbreviation.toolWindow.AbbreviationFactory$ProjectService"/>
+        <toolWindow id="Abbreviation"
+                    anchor="right"
+                    factoryClass="com.lizongying.abbreviation.toolWindow.AbbreviationFactory"/>
+    </extensions>
+
+    <actions>
+        <action id="Action"
+                class="com.lizongying.abbreviation.Action"
+                text="Abbreviation"
+                description="Abbreviation">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
