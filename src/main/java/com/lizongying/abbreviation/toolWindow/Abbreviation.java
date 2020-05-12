@@ -11,17 +11,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 
 public class Abbreviation {
@@ -30,7 +22,7 @@ public class Abbreviation {
     private JTextField keyword;
     private JPanel abbreviationContent;
 
-    private static final String url = "https://www.abbreviations.com/abbreviation/";
+    private static final String url = "http://jelly03:8003/api/abbr/";
 
     public Abbreviation(ToolWindow toolWindow) {
         search.addActionListener(e -> {
@@ -40,7 +32,6 @@ public class Abbreviation {
             }
         });
     }
-
 
     class MyResponseHandler implements ResponseHandler<String> {
 
@@ -80,31 +71,10 @@ public class Abbreviation {
                 notifier.notify("Error");
                 return;
             }
+            result.setText(data);
+            notifier.notify("Success");
         } catch (IOException e) {
             notifier.notify("Error");
-            return;
-        }
-        Document doc = Jsoup.parse(data);
-        Elements items = doc.select("table.no-margin tr");
-        Map<String, Integer> map = new TreeMap<>();
-        List<String> listShow = new ArrayList<>();
-        if (!items.isEmpty()) {
-            items.forEach((e) -> {
-                Element i = e.select("td.tm>a").first();
-                Elements i3 = e.select("td.rt>span#abbr-rate>span.sf");
-                map.put(i.text(), i3.size());
-            });
-            List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
-            list.sort((Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) ->
-                    o2.getValue().compareTo(o1.getValue())
-            );
-            for (Map.Entry<String, Integer> e : list) {
-                listShow.add(e.getKey());
-            }
-            result.setText(String.join("\n", listShow));
-            notifier.notify("Success");
-        } else {
-            notifier.notify("Empty");
         }
     }
 
