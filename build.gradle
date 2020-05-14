@@ -23,7 +23,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-Query using sqllite 
+Change api host 
       """
 }
 publishPlugin {

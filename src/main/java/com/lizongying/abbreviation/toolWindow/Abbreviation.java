@@ -22,7 +22,7 @@ public class Abbreviation {
     private JTextField keyword;
     private JPanel abbreviationContent;
 
-    private static final String url = "http://jelly03:8003/api/abbr/";
+    private static final String url = "http://technologytransfer.cn/api/abbr/";
 
     public Abbreviation(ToolWindow toolWindow) {
         search.addActionListener(e -> {
